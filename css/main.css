@@ -41,3 +41,5 @@ ul.posts {
 ul.posts li {
     list-style: none;
 }
+
+.markdown blockquote {  margin: 0;  padding-left: 1.4rem;  border-left: 4px solid #dadada; }

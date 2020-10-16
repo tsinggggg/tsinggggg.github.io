@@ -4,7 +4,7 @@ title: "Concepts: Object storage and S3"
 date: 2020-10-15
 ---
 
-## Object storage vs File storage vs Block storage
+# Object storage vs File storage vs Block storage
 * File storage
 > File storage, also called file-level or file-based storage, is exactly what you think it might be: Data is stored as a single piece of information inside a folder, just like you’d organize pieces of paper inside a manila folder. When you need to access that piece of data, your computer needs to know the path to find it. (Beware—It can be a long, winding path.) Data stored in files is organized and retrieved using a limited amount of metadata that tells the computer exactly where the file itself is kept. It’s like a library card catalog for data files.
 > 
@@ -28,9 +28,11 @@ Block storage chops data into blocks—get it?—and stores them as separate pie
 > There are drawbacks, to be sure. Objects can’t be modified—you have to write the object completely at once. Object storage also doesn’t work well with traditional databases, because writing objects is a slow process and writing an app to use an object storage API isn’t as simple as using file storage.
 [https://www.redhat.com/en/topics/data-storage/file-block-object-storage](https://www.redhat.com/en/topics/data-storage/file-block-object-storage)
 
-## AWS S3 or S3 API
+# AWS S3 or S3 API
 > Object storage is the underlying technology for a S3 compliant storage. S3 compliant storage is built on the S3 API allowing data storage as well as manage and retrieve object stores. Applications which comply with the S3 API can communicate easily with any S3 compliant storage. 
+
 [https://backup.ninja/news/how-build-your-own-object-storage-using-minio](https://backup.ninja/news/how-build-your-own-object-storage-using-minio)
 
 > [MinIO](https://docs.min.io/docs/minio-quickstart-guide.html) is a High Performance Object Storage released under Apache License v2.0. It is API compatible with Amazon S3 cloud storage service. Use MinIO to build high performance infrastructure for machine learning, analytics and application data workloads.
+
 [https://docs.min.io/docs/minio-quickstart-guide.html](https://docs.min.io/docs/minio-quickstart-guide.html)
