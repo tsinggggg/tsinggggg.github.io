@@ -648,7 +648,7 @@
   border: 0;
 }
 
-.markdown-body blockquote {
+.markdown-body blockquote p {
   padding: 0 1em;
   color: #6a737d;
   border-left: 2.5em solid #dfe2e5;
