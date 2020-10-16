@@ -29,6 +29,7 @@ Block storage chops data into blocks—get it?—and stores them as separate pie
 [https://www.redhat.com/en/topics/data-storage/file-block-object-storage](https://www.redhat.com/en/topics/data-storage/file-block-object-storage)
 
 # AWS S3 or S3 API
+
 > Object storage is the underlying technology for a S3 compliant storage. S3 compliant storage is built on the S3 API allowing data storage as well as manage and retrieve object stores. Applications which comply with the S3 API can communicate easily with any S3 compliant storage. 
 
 [https://backup.ninja/news/how-build-your-own-object-storage-using-minio](https://backup.ninja/news/how-build-your-own-object-storage-using-minio)
