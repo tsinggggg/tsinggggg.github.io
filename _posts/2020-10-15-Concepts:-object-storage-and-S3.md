@@ -2,7 +2,6 @@
 layout: post
 title: "Concepts: Object storage and S3"
 date: 2020-10-15
-css: foo
 tags: [storage, s3]
 ---
 
