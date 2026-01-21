@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Flux 2: What happens during inference"
+title: "Flux 2: What happens during inference[WIP]"
 date: 2026-01-20
 tags: [diffusion]
 ---
