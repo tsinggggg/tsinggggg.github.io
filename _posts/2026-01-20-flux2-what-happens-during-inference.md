@@ -96,3 +96,22 @@ where `default_sample_size` is 128 and then scaled 8 times by `vae_scale_factor`
 since the first version of Stable Diffusion model, diffusion happens at a latent space where latent shape is smaller than 
 the shape of the final image generated; and a VAE is responsible for projecting latents back to the space of images. This 
 allows diffusion models to operate with a smaller data size so the whole pipeline needs less compute.
+
+## Prepare latent variables
+
+The next step would be preparing a tensor with random numbers. Both denoising diffusion and flow matching models learn to 
+convert data points from one distribution to another, where the former usually is a random normal distribution and latter 
+being the distribution of images (after applying a VAE transformation, strictly speaking).
+
+Here the latent variable has a size of `1 * 128 * 64 * 64`, where `128` is the number of channels in input data expected
+by the transformer component; while `64` is half of `default_sample_size`. This is because there's actually a `2 * 2` 
+patching step in between VAE and the transformer. So here the latent variable generated is assumed to be "after patching" 
+even though there's no such explicit step applied to the random latent variable. (Though there would be such explicit step
+if an image condition is provided). Before being fed to the transformer, there's a final reshape step `1 * 128 * 64 * 64 -> 1 * 4096 * 128`
+applied to the latent variable to combine the height and width dimension.
+
+Besides the latent random tensor, a `latent_ids` will also be created, with the same size as the latent. Its purpose is similar 
+to how the `text_ids` is associated with the prompt embedding, representing each position of each text token. Here `latent_ids` 
+represents the position(H and W dimension) of each patch/token of the latent variable, while the time dimension and length dimension
+will just be 0.
+
