@@ -115,3 +115,42 @@ to how the `text_ids` is associated with the prompt embedding, representing each
 represents the position(H and W dimension) of each patch/token of the latent variable, while the time dimension and length dimension
 will just be 0.
 
+## Prepare timesteps
+
+Conceptually, the training of a denoising diffusion model has a forward process where a sequence of random noise with increasing 
+variance is applied to an image one by one at each timestep; then the model is trained to predict the original image from the noisy image conditioned at time `t`.
+The magnitude of the noise is parameterized by its variance. Diffusion models use the current timestep (which represent the magnitude of noise applied)
+as one of the condition variables to know how aggressively to denoise. So the goal of this section is to up come with a 
+time step embedding for each of the number of inference step specified. Here the concept of time step is internal to the model
+rather than simply an index from 0 up to `num_inference_step`. A time step is usually a number(doesn't have to be integer) from 1000 to 0. At the first
+iteration of the inference loop, it would be 1000, corresponding to the last step of the forward process(adding noise).
+
+First, a linear spaced sequence of `sigma` parameter is defined at inference time as
+
+```python
+    np.linspace(1.0, 1 / num_inference_steps, num_inference_steps) 
+```
+
+Secondly, a term `mu` will be calculated. This is an empirical shift term that adjusts how sigmas map to timesteps.
+As image size changes, attention statistics, noise scales, and therefore the “effective difficulty” of denoising changes.
+
+Then, based on `mu` and `sigma`, the scheduler will produce the timesteps as a 1D tensor of length `num_inference_step`.
+
+## Denoising loop
+
+There's where the fun begins, now we have the inputs needed for the diffusion model to gradually denoise the latent.
+
+```python
+                noise_pred = self.transformer(
+                    hidden_states=latent_model_input,  # (B, image_seq_len, C)
+                    timestep=timestep / 1000,
+                    guidance=guidance,
+                    encoder_hidden_states=prompt_embeds,
+                    txt_ids=text_ids,  # B, text_seq_len, 4
+                    img_ids=latent_image_ids,  # B, image_seq_len, 4
+                    joint_attention_kwargs=self._attention_kwargs,
+                    return_dict=False,
+                )[0]
+```
+
+The predicted noise from the diffusion transformer has the same shape as the latent `1 * 4096 * 128`
